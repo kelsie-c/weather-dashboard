@@ -27,7 +27,7 @@ $('.searchbtnZip').on('click', function(event) {
             .then(data => {
                 // reset form values
                 searchValue = event.target.parentElement.parentElement.children[0].children[0].value='';
-                
+
                 console.log(data);
                 let lat = data.lat;
                 console.log(lat);
@@ -82,9 +82,26 @@ $('.searchbtnName').on('click', function(event) {
     // else return error message - please enter a valid 5-digit zip code 
 })
 
+// Set event listener for created buttons that call the weather api
+$('.savedCities').on('click', function(event) {
+    let cityName = event.target.textContent;
+    console.log(cityName);
+    let newRequest = localStorage.getItem(cityName);
+    let clickedCity = JSON.parse(newRequest);
+    console.log(newRequest);
+    console.log(clickedCity);
+    let lat = clickedCity.lat;
+    let lon = clickedCity.lon;
+    getWeather(lat,lon);
+})
+
 // Set local storage and create button
 function sendToLocalStorage(city, obj) {
     localStorage.setItem(city, JSON.stringify(obj));
+    createButtons(city);
+}
+
+function createButtons(city) {
     let newCity = document.createElement("button");
     newCity.innerText = city;
     newCity.classList.add("button");
@@ -101,6 +118,20 @@ function getWeather(lat,lon) {
         .then(data => console.log(data));
 }
 
+// populate buttons on page from local storage on page load
+function loadButtons() {
+    let values = [];
+    let keys = Object.entries(localStorage);
+
+    for (i = 0; i < keys.length; i++) {
+        values.push(localStorage.key(i));
+    }
+    
+    for (j = 0; j < values.length; j++) {
+        let city = values[j];
+        createButtons(city);
+    }
+}
 
 // convert user input to lat & lon using geocoding API & send to local storage
 
@@ -145,3 +176,5 @@ function getWeather(lat,lon) {
     // weather
 
     // wind
+
+    loadButtons();
