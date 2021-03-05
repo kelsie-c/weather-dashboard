@@ -15,85 +15,48 @@
         <!-- add buttons to toggle F & C -->
     </header>
     <div class="columns">
-        <div class="column is-4 search">
-            <!-- search side panel -->
-            Search
-        </div>
-
-        <div class="column is-8 weather-info">
-            <h2>Currently In...</h2>
-
-            <div class="columns daily-weather">
-                <div class="column">
-                    Current Temp
+        <div class="column is-3">
+            <h3>Search by City & State</h3>
+            <div class="field has-addons searchByName">
+                <div class="control is-expanded">
+                    <input class="input" type="text" placeholder="City">
                 </div>
-
-                <div class="column">
-                    Current tags
-                    <ul>
-                        <li>Weather</li>
-                        <li>Humidity</li>
-                        <li>Wind</li>
-                    </ul>
+                <div class="control">
+                    <input class="input" type="text" placeholder="State">
                 </div>
-
-                <div class="column is-half">
-                    <h2>Next 3 hours</h2>
-                    <div class=columns>
-                        <div class="column is-2">
-                            hr
-                        </div>
-                        <div class="column is-2">
-                            temp
-                        </div>
-                        <div class="column is-3">
-                            weather
-                        </div>
-                        <div class="column is-3">
-                            humidity
-                        </div>
-                        <div class="column is-2">
-                            wind
-                        </div>
-                    </div>
-                    <div class=columns>
-                        <div class="column is-2">
-                            hr
-                        </div>
-                        <div class="column is-2">
-                            temp
-                        </div>
-                        <div class="column is-3">
-                            weather
-                        </div>
-                        <div class="column is-3">
-                            humidity
-                        </div>
-                        <div class="column is-2">
-                            wind
-                        </div>
-                    </div>
-                    <div class=columns>
-                        <div class="column is-2">
-                            hr
-                        </div>
-                        <div class="column is-2">
-                            temp
-                        </div>
-                        <div class="column is-3">
-                            weather
-                        </div>
-                        <div class="column is-3">
-                            humidity
-                        </div>
-                        <div class="column is-2">
-                            wind
-                        </div>
-                    </div>
+                <div class="control">
+                    <a class="button is-info searchbtnName">
+                    Search
+                    </a>
                 </div>
             </div>
+
+            <h3>OR Search by Zip Code</h3>
+            <div class="field has-addons searchByZip">
+                <div class="control is-expanded">
+                    <input class="input" type="text" placeholder="Zip">
+                </div>
+                <div class="control">
+                    <a class="button is-info searchbtnZip">
+                    Search
+                    </a>
+                </div>
+            </div>
+
+            <div class="box">
+                <!-- create buttons here -->
+                <h3>Your saved cities</h3>
+                <div class="control is-expanded w-100 savedCities">
+
+                </div>
+                              
+            </div>
+        </div>
+        <div class="column is-9">
+            Current Weather
         </div>
     </div>
-    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="./assets/script.js"></script>
 </body>
 </html>
