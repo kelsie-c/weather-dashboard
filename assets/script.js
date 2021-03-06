@@ -8,6 +8,7 @@ let myAPIkey = "9d3d1ebc0d24d21eb01463e1e0715eb4";
 let cityButtons = document.querySelector(".savedCities");
 let currentWeather = $('.current-weather');
 let currentTemp = $('.current-temp');
+let feelsLike = $('.feels-like');
 
 
 currentDay = moment().format('MM')
@@ -139,8 +140,10 @@ function getWeather(lat,lon) {
         .then(response => response.json())
         .then(data => {
             console.log(data);
-            let tempData = data.current.temp;
-            currentTemp.text(tempData);
+            let tempData = Math.round(data.current.temp);
+            currentTemp.text(tempData + "\u00B0");
+            let feelsLikeTemp = Math.round(data.current.feels_like);
+            feelsLike.text("Feels like " + feelsLikeTemp + "\u00B0");
         });
 
 }

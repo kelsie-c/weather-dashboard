@@ -3,9 +3,9 @@ body {
     margin-left: 50px;
     margin-right: 50px;
 }
-div {
+/* div {
     border: 1px black solid;
-}
+} */
 
 h1 {
     text-align: center;
@@ -44,7 +44,16 @@ h3 {
     width: 100%;
 }
 
+.current-weather {
+    justify-content: center;
+}
+
 .current-temp {
+    text-align: center;
     font-size: 44px;
     color: black;
+}
+
+.feels-like {
+    text-align: center;
 }
