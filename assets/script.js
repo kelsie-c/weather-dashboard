@@ -6,7 +6,17 @@ let geocodeAPIurl = "http://api.openweathermap.org/geo/1.0/";
 let oneCallAPIurl = "https://api.openweathermap.org/data/2.5/onecall?";
 let myAPIkey = "9d3d1ebc0d24d21eb01463e1e0715eb4";
 let cityButtons = document.querySelector(".savedCities");
+let currentWeather = $('.current-weather');
 
+currentWeather.text(moment().format('[Current Weather for] MMMM Do, YYYY'));
+currentDay = moment().format('MM')
+currentHour = moment().format('H');
+
+// Checks current day and hour and updates textarea background colors once an hour
+setInterval(function() {
+    currentDay = moment().format('MM');
+    currentHour = moment().format('H');    
+}, 360000);
 
 // use this variable to test if user input a zip code
 let zipCodeParam = /^\d{5}$/;
@@ -102,11 +112,13 @@ function sendToLocalStorage(city, obj) {
 }
 
 function createButtons(city) {
+    // there is a bug here where typing the same city/zip twice creates a duplicate button
     let newCity = document.createElement("button");
     newCity.innerText = city;
     newCity.classList.add("button");
     newCity.classList.add("is-block");
     cityButtons.append(newCity);
+
 }
 
 function getWeather(lat,lon) {
@@ -129,7 +141,11 @@ function loadButtons() {
     
     for (j = 0; j < values.length; j++) {
         let city = values[j];
-        createButtons(city);
+        let newCity = document.createElement("button");
+        newCity.innerText = city;
+        newCity.classList.add("button");
+        newCity.classList.add("is-block");
+        cityButtons.append(newCity);
     }
 }
 
@@ -177,4 +193,4 @@ function loadButtons() {
 
     // wind
 
-    loadButtons();
+loadButtons();
