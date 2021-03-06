@@ -7,8 +7,9 @@ let oneCallAPIurl = "https://api.openweathermap.org/data/2.5/onecall?";
 let myAPIkey = "9d3d1ebc0d24d21eb01463e1e0715eb4";
 let cityButtons = document.querySelector(".savedCities");
 let currentWeather = $('.current-weather');
+let currentTemp = $('.current-temp');
 
-currentWeather.text(moment().format('[Current Weather for] MMMM Do, YYYY'));
+
 currentDay = moment().format('MM')
 currentHour = moment().format('H');
 
@@ -18,7 +19,7 @@ setInterval(function() {
     currentHour = moment().format('H');    
 }, 360000);
 
-// use this variable to test if user input a zip code
+// use this variable to test if user input a 5-digit zip code
 let zipCodeParam = /^\d{5}$/;
 
 // log user input city and send to local storage
@@ -51,6 +52,7 @@ $('.searchbtnZip').on('click', function(event) {
                 console.log(obj);
                 let city = data.name;
                 console.log(city);
+                currentWeather.text("Current weather for " + city + " - " + moment().format('MMMM Do, YYYY'));
                 // send city name and object to local storage & create button
                 sendToLocalStorage(city, obj);
                 getWeather(lat,lon);
@@ -85,6 +87,7 @@ $('.searchbtnName').on('click', function(event) {
             console.log(obj);
             let city = data[0].name;
             console.log(city);
+            currentWeather.text("Current weather for " + city + " - " + moment().format('MMMM Do, YYYY'));
             // send city name and object to local storage & create button
             sendToLocalStorage(city, obj);
             getWeather(lat,lon);
@@ -112,13 +115,20 @@ function sendToLocalStorage(city, obj) {
 }
 
 function createButtons(city) {
-    // there is a bug here where typing the same city/zip twice creates a duplicate button
-    let newCity = document.createElement("button");
-    newCity.innerText = city;
-    newCity.classList.add("button");
-    newCity.classList.add("is-block");
-    cityButtons.append(newCity);
+    let allButtons = document.querySelectorAll(".savedCities");
+    for (i = 0; i < allButtons.length; i++) {
+        let savedbtnCities = allButtons[i].innerText;
 
+        if (savedbtnCities.includes(city)) {
+            return;
+        } else {
+            let newCity = document.createElement("button");
+            newCity.innerText = city;
+            newCity.classList.add("button");
+            newCity.classList.add("is-block");
+            cityButtons.append(newCity);
+        }
+    }
 }
 
 function getWeather(lat,lon) {
@@ -127,7 +137,12 @@ function getWeather(lat,lon) {
     let searchURL = oneCallAPIurl + "lat=" + lat + "&lon=" + lon + "&units=imperial&appid=" + myAPIkey;
     fetch(searchURL)
         .then(response => response.json())
-        .then(data => console.log(data));
+        .then(data => {
+            console.log(data);
+            let tempData = data.current.temp;
+            currentTemp.text(tempData);
+        });
+
 }
 
 // populate buttons on page from local storage on page load
@@ -148,10 +163,6 @@ function loadButtons() {
         cityButtons.append(newCity);
     }
 }
-
-// convert user input to lat & lon using geocoding API & send to local storage
-
-// create a button that appears beneath the search bar that calls info from local storage when clicked
 
 // api call to get the following for current day stats:
 
@@ -194,3 +205,11 @@ function loadButtons() {
     // wind
 
 loadButtons();
+onload();
+// on load show data for NYC
+function onload() {
+    let lat = 40.7143;
+    let lon = -74.006;
+    currentWeather.text("Current weather for New York City - " + moment().format('MMMM Do, YYYY'));
+    getWeather(lat,lon);
+}
