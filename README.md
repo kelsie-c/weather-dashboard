@@ -20,6 +20,7 @@ For this assignment, I was tasked with creating a weather dashboard from scratch
 
 ## App Preview
 
+![See the app](./assets/images/weather-dashboard-screenshot.png)
 
 ## Final Thoughts
 

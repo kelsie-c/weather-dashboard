@@ -1,5 +1,6 @@
 
 body {
+    font-family: 'Poppins', sans-serif;
     margin-left: 50px;
     margin-right: 50px;
 }
@@ -8,6 +9,7 @@ body {
 } */
 
 h1 {
+    font-family: 'Nunito', sans-serif;
     text-align: center;
     padding: 40px;
     font-size: 40px;
@@ -32,8 +34,12 @@ h1 {
 }
 
 h3 {
+    font-family: 'Nunito', sans-serif;
+    font-size: 20px;
+    font-weight: 600;
     text-align: center;
     margin-bottom: 25px;
+    padding-top: 10px;
 }
 
 .savedCities button {
@@ -69,11 +75,11 @@ h3 {
 }
 
 .snapshot {
-    width: 75%;
+
 }
 
 .weather-data {
-    width: 50%;
+
     font-size: 20px;
     line-height: 45px;
     padding-top: 10px;
@@ -85,6 +91,7 @@ h3 {
 
 .green {
     background-color: rgb(129, 245, 129);
+    border-radius: 10px;
 }
 
 .yellow {
@@ -101,6 +108,16 @@ h3 {
 
 .purple {
     background-color: rgb(193, 118, 255);
+}
+
+.tile {
+    font-size: 16px;
+    background-color: rgb(107, 176, 255);
+    text-align: center;
+    margin: 20px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-radius: 10px;
 }
 
 /* use @media to control width as screen size is smaller  */

@@ -20,7 +20,7 @@ let currentDewPoint = $('.dew-point');
 
 currentDay = moment().format('MM')
 currentHour = moment().format('H');
-
+console.log(currentHour);
 // Checks current day and hour and updates textarea background colors once an hour
 setInterval(function() {
     currentDay = moment().format('MM');
@@ -189,7 +189,9 @@ function getWeather(lat,lon) {
 
             // next 3 hours
             let firstHour = Math.round(currentHour) + 1;
-            if (firstHour > 12) {
+            if (firstHour > 24) {
+                firstHour = firstHour - 24;
+            } else if (firstHour > 12) {
                 firstHour = firstHour - 12;
             }
             $(".time1").text(firstHour);
@@ -200,7 +202,9 @@ function getWeather(lat,lon) {
             $(".hour1-temp").text(hour1Temp + "\u00B0");
 
             let secondHour = Math.round(currentHour) + 2;
-            if (secondHour > 12) {
+            if (secondHour > 24) {
+                secondHour = secondHour - 24;
+            } else if (secondHour > 12) {
                 secondHour = secondHour - 12;
             }
             $(".time2").text(secondHour);
@@ -211,7 +215,9 @@ function getWeather(lat,lon) {
             $(".hour2-temp").text(hour2Temp + "\u00B0");
 
             let thirdHour = Math.round(currentHour) + 3;
-            if (thirdHour > 12) {
+            if (thirdHour > 24) {
+                thirdHour = thirdHour - 24;
+            } else if (thirdHour > 12) {
                 thirdHour = thirdHour - 12;
             }
             $(".time3").text(thirdHour);
