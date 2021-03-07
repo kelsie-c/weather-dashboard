@@ -57,3 +57,30 @@ h3 {
 .feels-like {
     text-align: center;
 }
+
+.weather-now {
+    text-align: left;
+    padding-top: 10px;
+    margin-left: -10px;
+}
+
+#wicon {
+    text-align: right;
+}
+
+.snapshot {
+    width: 75%;
+}
+
+.weather-data {
+    width: 50%;
+    font-size: 20px;
+    line-height: 45px;
+    padding-top: 10px;
+}
+
+.next-3-hours {
+    text-align: center;
+}
+
+/* use @media to control width as screen size is smaller  */

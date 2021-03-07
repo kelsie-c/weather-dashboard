@@ -9,7 +9,14 @@ let cityButtons = document.querySelector(".savedCities");
 let currentWeather = $('.current-weather');
 let currentTemp = $('.current-temp');
 let feelsLike = $('.feels-like');
-
+let weatherNow = $('.weather-now');
+let weatherIcon = $('#wicon');
+let currentHumidity = $('.humidity');
+let currentWind = $('.wind');
+let currentUV = $('.uv-index');
+let currentPressure = $('.pressure');
+let currentVisibility = $('.visibility');
+let currentDewPoint = $('.dew-point');
 
 currentDay = moment().format('MM')
 currentHour = moment().format('H');
@@ -106,6 +113,7 @@ $('.savedCities').on('click', function(event) {
     console.log(clickedCity);
     let lat = clickedCity.lat;
     let lon = clickedCity.lon;
+    currentWeather.text("Current weather for " + cityName + " - " + moment().format('MMMM Do, YYYY'));
     getWeather(lat,lon);
 })
 
@@ -139,13 +147,72 @@ function getWeather(lat,lon) {
     fetch(searchURL)
         .then(response => response.json())
         .then(data => {
+            // get weather data
             console.log(data);
+
+            // current temperature, feels like, and icon
             let tempData = Math.round(data.current.temp);
             currentTemp.text(tempData + "\u00B0");
             let feelsLikeTemp = Math.round(data.current.feels_like);
+            let currentWeatherDesc = data.current.weather[0].main;
+            let currentIcon = data.current.weather[0].icon;
+            let iconURL = "http://openweathermap.org/img/w/" + currentIcon + ".png";
+            $("#wicon").html("<img src='" + iconURL  + "'>");
+            console.log(data.current.weather);
             feelsLike.text("Feels like " + feelsLikeTemp + "\u00B0");
-        });
+            weatherNow.text(currentWeatherDesc);
 
+            // current humidity, wind speed, uv index, pressure, visibility, & dewpoint
+            let humidity = data.current.humidity;
+            currentHumidity.text("Humidity: " + humidity + "%");
+            let wind = Math.round(data.current.wind_speed);
+            currentWind.text("Wind Speed: " + wind + " mph");
+            let uvIndex = data.current.uvi;
+            currentUV.text("UV Index: " + uvIndex);
+            let pressure = data.current.pressure;
+            currentPressure.text("Pressure: " + pressure + " hPa")
+            let visibility = data.current.visibility;
+            currentVisibility.text("Visibility: " + visibility + " m");
+            let dewPoint = Math.round(data.current.dew_point);
+            currentDewPoint.text("Dew Point: " + dewPoint + " \u00B0" + "F");
+
+            // next 3 hours
+            let firstHour = Math.round(currentHour) + 1;
+            if (firstHour > 12) {
+                firstHour = firstHour - 12;
+            }
+            $(".time1").text(firstHour);
+            let hour1 = data.hourly[1].weather[0].icon;
+            let iconURL1 = "http://openweathermap.org/img/w/" + hour1 + ".png";
+            $(".hour1").html("<img src='" + iconURL1  + "'>");
+            let hour1Temp = Math.round(data.hourly[1].temp);
+            $(".hour1-temp").text(hour1Temp + "\u00B0");
+
+            let secondHour = Math.round(currentHour) + 2;
+            if (secondHour > 12) {
+                secondHour = secondHour - 12;
+            }
+            $(".time2").text(secondHour);
+            let hour2 = data.hourly[2].weather[0].icon;
+            let iconURL2 = "http://openweathermap.org/img/w/" + hour2 + ".png";
+            $(".hour2").html("<img src='" + iconURL2  + "'>");
+            let hour2Temp = Math.round(data.hourly[2].temp);
+            $(".hour2-temp").text(hour2Temp + "\u00B0");
+
+            let thirdHour = Math.round(currentHour) + 3;
+            if (thirdHour > 12) {
+                thirdHour = thirdHour - 12;
+            }
+            $(".time3").text(thirdHour);
+            let hour3 = data.hourly[3].weather[0].icon;
+            let iconURL3 = "http://openweathermap.org/img/w/" + hour3 + ".png";
+            $(".hour3").html("<img src='" + iconURL3  + "'>");
+            let hour3Temp = Math.round(data.hourly[3].temp);
+            $(".hour3-temp").text(hour3Temp + "\u00B0");
+
+            // next 5 days 
+            
+        });
 }
 
 // populate buttons on page from local storage on page load
@@ -169,25 +236,6 @@ function loadButtons() {
 
 // api call to get the following for current day stats:
 
-    // current temperature
-
-    // current feels like temperature
-
-    // current precipitation percentage
-
-    // current weather (sunny, cloudy, rainy, etc) & assign an icon depending on response
-
-    // humidity
-
-    // wind
-
-    // pressure
-
-    // visibility
-
-    // dew point
-
-    // uv index
 
 // api call to get the following for next three hour stats:
 
