@@ -8,6 +8,8 @@ For this assignment, I was tasked with creating a weather dashboard from scratch
 - The UV index will indicate with a color scale the strength of the UV alert
 - Each city must also show a 5-day forecast
 
+See the deployed app here: [weather dashboard](https://kelsie-c.github.io/weather-dashboard/)
+
 ## Skills Used
 
 - HTML
@@ -20,7 +22,7 @@ For this assignment, I was tasked with creating a weather dashboard from scratch
 
 ## App Preview
 
-![See the app](./assets/images/weather-dashboard-screenshot.png)
+![See the app]("./assets/images/weather-dashboard-screenshot.png")
 
 ## Final Thoughts
 
