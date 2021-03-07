@@ -22,7 +22,7 @@ See the deployed app here: [weather dashboard](https://kelsie-c.github.io/weathe
 
 ## App Preview
 
-![See the app]("./assets/images/weather-dashboard-screenshot.png")
+![See the app](./assets/images/weather-dashboard-screenshot.png)
 
 ## Final Thoughts
 
