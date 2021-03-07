@@ -169,6 +169,17 @@ function getWeather(lat,lon) {
             currentWind.text("Wind Speed: " + wind + " mph");
             let uvIndex = data.current.uvi;
             currentUV.text("UV Index: " + uvIndex);
+            if (Math.round(uvIndex) <= 2) {
+                currentUV.addClass("green");
+            } else if (Math.round(uvIndex) > 2 && Math.round(uvIndex) <= 5) {
+                currentUV.addClass("yellow");
+            } else if (Math.round(uvIndex) > 5 && Math.round(uvIndex) <= 7) {
+                currentUV.addClass("orange");
+            } else if (Math.round(uvIndex) > 7 && Math.round(uvIndex) <= 10) {
+                currentUV.addClass("red");
+            } else {
+                currentUV.addClass("purple");
+            }
             let pressure = data.current.pressure;
             currentPressure.text("Pressure: " + pressure + " hPa")
             let visibility = data.current.visibility;
@@ -211,7 +222,56 @@ function getWeather(lat,lon) {
             $(".hour3-temp").text(hour3Temp + "\u00B0");
 
             // next 5 days 
-            
+            let date1 = moment().add(1, "days");
+            $(".day1").text(date1.format("MM-DD-YY"));
+            let day1Icon = data.daily[1].weather[0].icon;
+            let dayIconURL1 = "http://openweathermap.org/img/w/" + day1Icon + ".png";
+            $(".icon-1").html("<img src='" + dayIconURL1  + "'>");
+            let day1Temp = Math.round(data.daily[1].temp.day);
+            $(".day1-temp").text(day1Temp + "\u00B0");
+            let day1Humidity = data.daily[1].humidity;
+            $(".day1-humid").text("Humidity: " + day1Humidity + "%");
+
+            let date2 = moment().add(2, "days");
+            $(".day2").text(date2.format("MM-DD-YY"));
+            let day2Icon = data.daily[2].weather[0].icon;
+            let dayIconURL2 = "http://openweathermap.org/img/w/" + day2Icon + ".png";
+            $(".icon-2").html("<img src='" + dayIconURL2  + "'>");
+            let day2Temp = Math.round(data.daily[2].temp.day);
+            $(".day2-temp").text(day2Temp + "\u00B0");
+            let day2Humidity = data.daily[2].humidity;
+            $(".day2-humid").text("Humidity: " + day2Humidity + "%");
+
+            let date3 = moment().add(3, "days");
+            $(".day3").text(date3.format("MM-DD-YY"));
+            let day3Icon = data.daily[3].weather[0].icon;
+            let dayIconURL3 = "http://openweathermap.org/img/w/" + day3Icon + ".png";
+            $(".icon-3").html("<img src='" + dayIconURL3  + "'>");
+            let day3Temp = Math.round(data.daily[3].temp.day);
+            $(".day3-temp").text(day3Temp + "\u00B0");
+            let day3Humidity = data.daily[3].humidity;
+            $(".day3-humid").text("Humidity: " + day3Humidity + "%");
+
+            let date4 = moment().add(4, "days");
+            $(".day4").text(date4.format("MM-DD-YY"));
+            let day4Icon = data.daily[4].weather[0].icon;
+            let dayIconURL4 = "http://openweathermap.org/img/w/" + day4Icon + ".png";
+            $(".icon-4").html("<img src='" + dayIconURL4  + "'>");
+            let day4Temp = Math.round(data.daily[4].temp.day);
+            $(".day4-temp").text(day4Temp + "\u00B0");
+            let day4Humidity = data.daily[4].humidity;
+            $(".day4-humid").text("Humidity: " + day4Humidity + "%");
+
+            let date5 = moment().add(5, "days");
+            $(".day5").text(date5.format("MM-DD-YY"));
+            let day5Icon = data.daily[5].weather[0].icon;
+            let dayIconURL5 = "http://openweathermap.org/img/w/" + day5Icon + ".png";
+            $(".icon-5").html("<img src='" + dayIconURL5  + "'>");
+            let day5Temp = Math.round(data.daily[5].temp.day);
+            $(".day5-temp").text(day5Temp + "\u00B0");
+            let day5Humidity = data.daily[5].humidity;
+            $(".day5-humid").text("Humidity: " + day5Humidity + "%");
+
         });
 }
 
@@ -234,29 +294,9 @@ function loadButtons() {
     }
 }
 
-// api call to get the following for current day stats:
-
-
-// api call to get the following for next three hour stats:
-
-    // temperature
-
-    // weather
-
-    // humidity
-
-    // wind
-
-// api call to get the following for each of the next 5 days:
-
-    // temperature
-
-    // weather
-
-    // wind
-
 loadButtons();
 onload();
+
 // on load show data for NYC
 function onload() {
     let lat = 40.7143;

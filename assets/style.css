@@ -83,4 +83,24 @@ h3 {
     text-align: center;
 }
 
+.green {
+    background-color: rgb(129, 245, 129);
+}
+
+.yellow {
+    background-color: rgb(250, 250, 128);
+}
+
+.orange {
+    background-color: rgb(253, 200, 101);
+}
+
+.red {
+    background-color: rgb(255, 134, 134);
+}
+
+.purple {
+    background-color: rgb(193, 118, 255);
+}
+
 /* use @media to control width as screen size is smaller  */
