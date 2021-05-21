@@ -293,9 +293,10 @@ function getWeather(city,lat,lon) {
 function loadButtons() {
     let values = [];
     let keys = localStorage.getItem("cities");
-    let keyObj = JSON.parse(keys);
-    // console.log(keyObj[0].city);
-    if (keyObj !== null) {
+    if (keys !== null) {
+        let keyObj = JSON.parse(keys);
+        console.log(keys);
+    
         for (i = 0; i < keyObj.length; i++) {
             values.push(keyObj[i].city);
         }
