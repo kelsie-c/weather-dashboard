@@ -295,7 +295,7 @@ function loadButtons() {
     let keys = localStorage.getItem("cities");
     let keyObj = JSON.parse(keys);
     // console.log(keyObj[0].city);
-    if (keyObj.length !== null) {
+    if (keyObj !== null) {
         for (i = 0; i < keyObj.length; i++) {
             values.push(keyObj[i].city);
         }
