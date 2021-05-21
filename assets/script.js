@@ -2,7 +2,7 @@
 let searchValue;
 let cityValue;
 let stateValue;
-let cities = JSON.parse(localStorage.getItem("cities"));
+let cities = [JSON.parse(localStorage.getItem("cities"))];
 let geocodeAPIurl = "https://api.openweathermap.org/geo/1.0/";
 let oneCallAPIurl = "https://api.openweathermap.org/data/2.5/onecall?";
 let myAPIkey = "9d3d1ebc0d24d21eb01463e1e0715eb4";
@@ -322,5 +322,6 @@ function onload() {
     let lat = 40.7143;
     let lon = -74.006;
     currentWeather.text("Current weather for New York City - " + moment().format('MMMM Do, YYYY'));
+    localStorage.setItem("cities",`{"city":${start},"obj":{"lat":${lat},"lon":${lon}}}`);
     getWeather(start,lat,lon);
 }
