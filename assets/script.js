@@ -2,6 +2,7 @@
 let searchValue;
 let cityValue;
 let stateValue;
+let cities = JSON.parse(localStorage.getItem("cities"));
 let geocodeAPIurl = "http://api.openweathermap.org/geo/1.0/";
 let oneCallAPIurl = "https://api.openweathermap.org/data/2.5/onecall?";
 let myAPIkey = "9d3d1ebc0d24d21eb01463e1e0715eb4";
@@ -20,7 +21,7 @@ let currentDewPoint = $('.dew-point');
 
 currentDay = moment().format('MM')
 currentHour = moment().format('H');
-console.log(currentHour);
+// console.log(currentHour);
 // Checks current day and hour and updates textarea background colors once an hour
 setInterval(function() {
     currentDay = moment().format('MM');
@@ -37,7 +38,7 @@ let searchBtn = document.querySelector('.searchBtn');
 // when zip code search button is clicked, assign user input to a variable and send to api
 $('.searchbtnZip').on('click', function(event) {
     searchValue = event.target.parentElement.parentElement.children[0].children[0].value;
-    console.log(searchValue);
+    // console.log(searchValue);
     if (zipCodeParam.test(searchValue) === true) {
         // send zip code to geocoding api and return city, lat & lon
         let zipSearch = geocodeAPIurl + "zip?zip=" + searchValue + ",US&appid=" + myAPIkey;
@@ -47,23 +48,25 @@ $('.searchbtnZip').on('click', function(event) {
                 // reset form values
                 searchValue = event.target.parentElement.parentElement.children[0].children[0].value='';
 
-                console.log(data);
+                // console.log(data);
                 let lat = data.lat;
-                console.log(lat);
+                // console.log(lat);
                 let lon = data.lon;
-                console.log(lon);
+                // console.log(lon);
                 // create an object with the lattitude and longitude
                 let obj = {
                     lat,
                     lon
                 }
-                console.log(obj);
+                // console.log(obj);
                 let city = data.name;
-                console.log(city);
+                // console.log(city);
                 currentWeather.text("Current weather for " + city + " - " + moment().format('MMMM Do, YYYY'));
                 // send city name and object to local storage & create button
-                sendToLocalStorage(city, obj);
-                getWeather(lat,lon);
+                cities.push({city, obj});
+                sendToLocalStorage(cities);
+                createButtons(city);
+                getWeather(city,lat,lon);
             });
     }  
     // else return error message - please enter a valid 5-digit zip code 
@@ -72,8 +75,8 @@ $('.searchbtnZip').on('click', function(event) {
 $('.searchbtnName').on('click', function(event) {
     cityValue = event.target.parentElement.parentElement.children[0].children[0].value;
     stateValue = event.target.parentElement.parentElement.children[1].children[0].value;
-    console.log(cityValue);
-    console.log(stateValue);
+    // console.log(cityValue);
+    // console.log(stateValue);
     let nameSearch = geocodeAPIurl + "direct?q=" + cityValue + "," + stateValue + ",US&appid=" + myAPIkey;
     fetch(nameSearch)
         .then(response => response.json())
@@ -82,23 +85,25 @@ $('.searchbtnName').on('click', function(event) {
             cityValue = event.target.parentElement.parentElement.children[0].children[0].value='';
             stateValue = event.target.parentElement.parentElement.children[1].children[0].value='';
 
-            console.log(data);
+            // console.log(data);
             let lat = data[0].lat;
-            console.log(lat);
+            // console.log(lat);
             let lon = data[0].lon;
-            console.log(lon);
+            // console.log(lon);
             // create an object with the lattitude and longitude
             let obj = {
                 lat,
                 lon
             }
-            console.log(obj);
+            // console.log(obj);
             let city = data[0].name;
-            console.log(city);
+            // console.log(city);
             currentWeather.text("Current weather for " + city + " - " + moment().format('MMMM Do, YYYY'));
             // send city name and object to local storage & create button
-            sendToLocalStorage(city, obj);
-            getWeather(lat,lon);
+            cities.push({city, obj});
+            sendToLocalStorage(cities);
+            createButtons(city);
+            getWeather(city,lat,lon);
         });  
     // else return error message - please enter a valid 5-digit zip code 
 })
@@ -106,21 +111,24 @@ $('.searchbtnName').on('click', function(event) {
 // Set event listener for created buttons that call the weather api
 $('.savedCities').on('click', function(event) {
     let cityName = event.target.textContent;
-    console.log(cityName);
-    let newRequest = localStorage.getItem(cityName);
-    let clickedCity = JSON.parse(newRequest);
-    console.log(newRequest);
-    console.log(clickedCity);
-    let lat = clickedCity.lat;
-    let lon = clickedCity.lon;
+    // console.log(cityName);
+    let newRequest = localStorage.getItem("cities");
+    let keyObj = JSON.parse(newRequest);
+
+    for (i = 0; i < keyObj.length; i++) {
+        if (cityName === keyObj[i].city) {
+            lat = keyObj[i].obj.lat;
+            lon = keyObj[i].obj.lon;
+        }
+    }
     currentWeather.text("Current weather for " + cityName + " - " + moment().format('MMMM Do, YYYY'));
-    getWeather(lat,lon);
+    getWeather(cityName,lat,lon);
 })
 
 // Set local storage and create button
-function sendToLocalStorage(city, obj) {
-    localStorage.setItem(city, JSON.stringify(obj));
-    createButtons(city);
+function sendToLocalStorage(cities) {
+    localStorage.setItem("cities", JSON.stringify(cities));
+    
 }
 
 function createButtons(city) {
@@ -140,15 +148,15 @@ function createButtons(city) {
     }
 }
 
-function getWeather(lat,lon) {
-    console.log(lat);
-    console.log(lon);
+function getWeather(city,lat,lon) {
+    // console.log(lat);
+    // console.log(lon);
     let searchURL = oneCallAPIurl + "lat=" + lat + "&lon=" + lon + "&units=imperial&appid=" + myAPIkey;
     fetch(searchURL)
         .then(response => response.json())
         .then(data => {
             // get weather data
-            console.log(data);
+            // console.log(data);
 
             // current temperature, feels like, and icon
             let tempData = Math.round(data.current.temp);
@@ -158,7 +166,7 @@ function getWeather(lat,lon) {
             let currentIcon = data.current.weather[0].icon;
             let iconURL = "http://openweathermap.org/img/w/" + currentIcon + ".png";
             $("#wicon").html("<img src='" + iconURL  + "'>");
-            console.log(data.current.weather);
+            // console.log(data.current.weather);
             feelsLike.text("Feels like " + feelsLikeTemp + "\u00B0");
             weatherNow.text(currentWeatherDesc);
 
@@ -277,18 +285,20 @@ function getWeather(lat,lon) {
             $(".day5-temp").text(day5Temp + "\u00B0");
             let day5Humidity = data.daily[5].humidity;
             $(".day5-humid").text("Humidity: " + day5Humidity + "%");
-
+            // createButtons(city);
         });
 }
 
 // populate buttons on page from local storage on page load
 function loadButtons() {
     let values = [];
-    let keys = Object.entries(localStorage);
-
-    for (i = 0; i < keys.length; i++) {
-        values.push(localStorage.key(i));
+    let keys = localStorage.getItem("cities");
+    let keyObj = JSON.parse(keys);
+    // console.log(keyObj[0].city);
+    for (i = 0; i < keyObj.length; i++) {
+        values.push(keyObj[i].city);
     }
+    // console.log(values);
     
     for (j = 0; j < values.length; j++) {
         let city = values[j];
@@ -305,8 +315,9 @@ onload();
 
 // on load show data for NYC
 function onload() {
+    let start = "New York City"
     let lat = 40.7143;
     let lon = -74.006;
     currentWeather.text("Current weather for New York City - " + moment().format('MMMM Do, YYYY'));
-    getWeather(lat,lon);
+    getWeather(start,lat,lon);
 }
