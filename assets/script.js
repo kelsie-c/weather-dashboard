@@ -3,7 +3,7 @@ let searchValue;
 let cityValue;
 let stateValue;
 let cities = JSON.parse(localStorage.getItem("cities"));
-let geocodeAPIurl = "http://api.openweathermap.org/geo/1.0/";
+let geocodeAPIurl = "https://api.openweathermap.org/geo/1.0/";
 let oneCallAPIurl = "https://api.openweathermap.org/data/2.5/onecall?";
 let myAPIkey = "9d3d1ebc0d24d21eb01463e1e0715eb4";
 let cityButtons = document.querySelector(".savedCities");
@@ -295,18 +295,20 @@ function loadButtons() {
     let keys = localStorage.getItem("cities");
     let keyObj = JSON.parse(keys);
     // console.log(keyObj[0].city);
-    for (i = 0; i < keyObj.length; i++) {
-        values.push(keyObj[i].city);
-    }
-    // console.log(values);
-    
-    for (j = 0; j < values.length; j++) {
-        let city = values[j];
-        let newCity = document.createElement("button");
-        newCity.innerText = city;
-        newCity.classList.add("button");
-        newCity.classList.add("is-block");
-        cityButtons.append(newCity);
+    if (keyObj.length !== null) {
+        for (i = 0; i < keyObj.length; i++) {
+            values.push(keyObj[i].city);
+        }
+        // console.log(values);
+        
+        for (j = 0; j < values.length; j++) {
+            let city = values[j];
+            let newCity = document.createElement("button");
+            newCity.innerText = city;
+            newCity.classList.add("button");
+            newCity.classList.add("is-block");
+            cityButtons.append(newCity);
+        }
     }
 }
 
